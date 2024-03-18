@@ -98,6 +98,7 @@ def blogNew():
             subject = form.subject.data,
             content = form.content.data,
             tag = form.tag.data,
+            postmood = form.postmood.data,
             author = current_user.id,
             # This sets the modifydate to the current datetime.
             modify_date = dt.datetime.utcnow
@@ -143,6 +144,7 @@ def blogEdit(blogID):
             subject = form.subject.data,
             content = form.content.data,
             tag = form.tag.data,
+            postmood = form.postmood.data,
             modify_date = dt.datetime.utcnow
         )
         # After updating the document, send the user to the updated blog using a redirect.
@@ -153,6 +155,7 @@ def blogEdit(blogID):
     form.subject.data = editBlog.subject
     form.content.data = editBlog.content
     form.tag.data = editBlog.tag
+    form.postmood.data = editBlog.postmood
 
 
     # Send the user to the blog form that is now filled out with the current information

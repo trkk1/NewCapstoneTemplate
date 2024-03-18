@@ -20,6 +20,7 @@ import jwt
 from time import time
 from bson.objectid import ObjectId
 
+
 class User(UserMixin, Document):
     createdate = DateTimeField(defaultdefault=dt.datetime.utcnow)
     gid = StringField(sparse=True, unique=True)
@@ -35,6 +36,8 @@ class User(UserMixin, Document):
     adult_lname = StringField()
     adult_email = StringField()
     consent = BooleanField(default=False)
+    role = StringField()
+    phone = StringField()
 
     meta = {
         'ordering': ['lname','fname']
@@ -59,6 +62,7 @@ class Blog(Document):
     subject = StringField()
     content = StringField()
     tag = StringField()
+    postmood = StringField()
     create_date = DateTimeField(default=dt.datetime.utcnow)
     modify_date = DateTimeField()
 
@@ -94,6 +98,18 @@ class Clinic(Document):
     lat = FloatField()
     lon = FloatField()
     
+    meta = {
+        'ordering': ['-createdate']
+    }
+
+class Mood(Document):
+    author = ReferenceField('User',reverse_delete_rule=CASCADE)
+    emotion = StringField()
+    activity = StringField()
+    description = StringField()
+    create_date = DateTimeField(default=dt.datetime.utcnow)
+    modify_date = DateTimeField()
+
     meta = {
         'ordering': ['-createdate']
     }

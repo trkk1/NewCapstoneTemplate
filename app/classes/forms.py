@@ -10,8 +10,10 @@ from wtforms import StringField, SubmitField, TextAreaField, IntegerField, Selec
 from wtforms_components import TimeField
 
 class ProfileForm(FlaskForm):
+    role = SelectField('Role', choices = [("Teacher", "Teacher"),("Student", "Student")])
     fname = StringField('First Name', validators=[DataRequired()])
     lname = StringField('Last Name', validators=[DataRequired()]) 
+    phone = StringField('Phone', validators=[DataRequired()])
     image = FileField("Image") 
     submit = SubmitField('Post')
 
@@ -36,6 +38,7 @@ class BlogForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
     content = TextAreaField('Blog', validators=[DataRequired()])
     tag = StringField('Tag', validators=[DataRequired()])
+    postmood = SelectField("What is your mood for today?", choices=[(None,'---'),("Terrible","Terrible"),("Not Good","Not Good"),("Ok","Ok"),("Good","Good"),("Amazing","Amazing")], validators=[DataRequired()])
     submit = SubmitField('Blog')
 
 class CommentForm(FlaskForm):
@@ -48,5 +51,11 @@ class ClinicForm(FlaskForm):
     city = StringField('City', validators=[DataRequired()])
     state = StringField('State', validators=[DataRequired()])
     zipcode = StringField('Zipcode',validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class MoodForm(FlaskForm):
+    emotion = SelectField('Emotion', choices=[(None,'---'),("Furious","Furious"),("Depressed","Depressed"),("Stressed","Stressed"),("Sad","Sad"),("OK","OK"),("Happy","Happy")], validators=[DataRequired()])
+    activity = SelectField('Activity', choices=[(None,'---'),("Family","Family"),("Friend","Friend"),("Work","Work"),("Study","Study"),("Relationship","Relationship")], validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
     submit = SubmitField('Submit')

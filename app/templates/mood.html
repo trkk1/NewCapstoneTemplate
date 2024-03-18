@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if mood %}
+    {{moment(mood.create_date).calendar()}} by {{mood.author.fname}} {{mood.author.lname}} 
+    {% if mood.modifydate %}
+        modified {{moment(mood.modifydate).calendar()}}
+    {% endif %}
+    <br>
+    {% if mood.author == current_user %}
+        <a data-toggle="tooltip" data-placement="top" title="Delete Mood" href="/mood/delete/{{mood.id}}">
+            <img width="40" class="bottom-image" src="/static/delete.png">
+        </a>
+        <a data-toggle="tooltip" data-placement="top" title="Edit Mood" href="/mood/edit/{{mood.id}}">
+            <img width="40" class="bottom-image" src="/static/edit.png">
+        </a>
+    {% endif %}
+
+    <h1 class="display-5">{{mood.subject}}</h1>
+    <p class="fs-3 text-break">
+        {% if mood.author.image %}
+            <img width="120" class="img-thumbnail float-start me-2" src="data:image;base64,{{base64encode(mood.author.image.read())}}">
+        {% endif %}
+            {{mood.description}} <br>
+            {{mood.activity}} <br>
+            {{mood.emotion}}
+
+    </p>
+   
+{% else %}
+
+{% endif %}
+
+{% endblock %}

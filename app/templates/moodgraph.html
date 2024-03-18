@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% for image in images %}
+<img src="/static/graphs/{{image}}">
+<br> <br> <br> <br>
+{% endfor %}
+
+{% endblock %}

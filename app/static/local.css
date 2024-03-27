@@ -1,3 +1,18 @@
 html body {
-    background-color: #9bbeeb;
+    background-color: #FF6961;;
   }
+
+.carousel-caption{
+  position: relative;
+  color:#FF6961;
+  font-family: 'Times New Roman', Times, serif;
+  top: 0px;
+}
+
+.text-block{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #EDEDED;
+
+}

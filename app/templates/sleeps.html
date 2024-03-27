@@ -7,20 +7,20 @@
         <h1 class="display-1">All Blogs</h1>
     </div>
     <div class="col">
-        <a href="/sleep/new" class="btn btn-primary btn-sm mt-5" role="button">New Sleep</a>
-        <a href="/sleepgraph" class="btn btn-primary btn-sm mt-5" role="button">Graph it!</a>
+        <a href="/mood/new" class="btn btn-primary btn-sm mt-5" role="button">New Mood</a>
+        <a href="/moodgraph" class="btn btn-primary btn-sm mt-5" role="button">Graph it!</a>
     </div>
 </div>
 
-{% if sleeps %}
-    {% for sleep in sleeps %}
+{% if moods %}
+    {% for mood in moods %}
         <div class="row border-bottom">
 
         <div clas="col">
-                <a data-toggle="tooltip" data-placement="top" title="Delete Sleep" href="/sleep/delete/{{sleep.id}}">
+                <a data-toggle="tooltip" data-placement="top" title="Delete Mood" href="/mood/delete/{{mood.id}}">
                     <img width="20" class="bottom-image" src="/static/delete.png">
                 </a>
-                <a data-toggle="tooltip" data-placement="top" title="Edit Sleep" href="/sleep/edit/{{sleep.id}}">
+                <a data-toggle="tooltip" data-placement="top" title="Edit Mood" href="/mood/edit/{{mood.id}}">
                     <img width="20" class="bottom-image" src="/static/edit.png">
                 </a>
         </div>
@@ -30,56 +30,36 @@
                 <h3>Date</h3>
                 {% endif %}
 
-                <a href="/sleep/{{sleep.id}}">
-                    {{moment(sleep.sleep_date).format('MMMM Do YYYY')}}
+                <a href="/mood/{{mood.id}}">
+                    {{moment(mood.mood_date).format('MMMM Do YYYY')}}
                 </a>
             </div>
             <div class="col-2">
                 {% if loop.index == 1 %}
-                <h3>Sleeper</h3>
+                <h3>User</h3>
                 {% endif %}
-                {{sleep.sleeper.fname}} {{sleep.sleeper.lname}}
+                {{mood.author.fname}} {{mood.author.lname}}
             </div>
             <div class="col">
                 {% if loop.index == 1 %}
-                    <h3>Hours</h3>
+                    <h3>Activity</h3>
                 {% endif %}
-                {{sleep.hours}}
+                {{mood.activity}}
+            <div class="col">
+                {% if loop.index == 1 %}
+                    <h3>Mood</h3>
+                {% endif %}
+                {{mood.emotion}}
             </div>
             <div class="col">
                 {% if loop.index == 1 %}
-                    <h3>Start</h3>
+                    <h3>Description</h3>
                 {% endif %}
-                {{sleep.start}}
-            </div>
-            <div class="col">
-                {% if loop.index == 1 %}
-                    <h3>End</h3>
-                {% endif %}
-                {{sleep.end}}
-            </div>
-            <div class="col">
-                {% if loop.index == 1 %}
-                    <h3>Rating</h3>
-                {% endif %}
-                {{sleep.rating}}
-            </div>
-            <div class="col">
-                {% if loop.index == 1 %}
-                    <h3>Feel</h3>
-                {% endif %}
-                {{sleep.feel}}
-            </div>
-            <div class="col">
-                {% if loop.index == 1 %}
-                    <h3>Mins to Sleep</h3>
-                {% endif %}
-                {{sleep.minstosleep}}
-            </div>
+                {{mood.description}}
         </div>
     {% endfor %}
 {% else %}
-    <h1>No Sleeps</h1>
+    <h1>No Status</h1>
 {% endif %}
 
 {% endblock %}

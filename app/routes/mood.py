@@ -2,8 +2,8 @@ from app import app
 import mongoengine.errors
 from flask import render_template, flash, redirect, url_for
 from flask_login import current_user
-from app.classes.data import Mood, Comment
-from app.classes.forms import MoodForm, CommentForm
+from app.classes.data import Mood, Comment2
+from app.classes.forms import MoodForm, Comment2Form
 from flask_login import login_required
 import datetime as dt
 
@@ -35,6 +35,7 @@ def moodNew():
             description= form.description.data,
             emotion = form.emotion.data,
             activity = form.activity.data,
+            goal = form.goal.data,
             author = current_user.id,
             # This sets the modifydate to the current datetime.
             modify_date = dt.datetime.utcnow
@@ -75,6 +76,7 @@ def moodEdit(moodID):
             description = form.description.data,
             activity = form.activity.data,
             emotion = form.emotion.data,
+            goal = form.goal.data,
             modify_date = dt.datetime.utcnow
         )
         # After updating the document, send the user to the updated blog using a redirect.
@@ -85,6 +87,7 @@ def moodEdit(moodID):
     form.description.data = editMood.description
     form.activity.data = editMood.activity
     form.emotion.data = editMood.emotion
+    form.goal.data = editMood.goal
 
 
 
@@ -105,7 +108,7 @@ def mood(moodID):
     # there is a field on the comment collection called 'blog' that is a reference the Blog
     # document it is related to.  You can use the blogID to get the blog and then you can use
     # the blog object (thisBlog in this case) to get all the comments.
-    theseComments = Comment.objects(mood=thisMood)
+    theseComments = Comment2.objects(mood=thisMood)
     # Send the blog object and the comments object to the 'blog.html' template.
     return render_template('mood.html',mood=thisMood,comments=theseComments)
 
@@ -134,11 +137,54 @@ def moodDelete(moodID):
         # delete the blog using the delete() method from Mongoengine
         deleteMood.delete()
         # send a message to the user that the blog was deleted.
-        flash('The Mood was deleted.')
     else:
         # if the user is not the author tell them they were denied.
         flash("You can't delete a  you don't own.")
     # Retrieve all of the remaining blogs so that they can be listed.
     moods = Mood.objects()  
     # Send the user to the list of remaining blogs.
-    return render_template('moods.html',moods=moods)
+    return render_template('deletepage.html', moods = moods)
+
+#COMMENT
+@app.route('/comment2/new/<moodID>', methods=['GET', 'POST'])
+@login_required
+def comment2New(moodID):
+    mood = Mood.objects.get(id=moodID)
+    form = Comment2Form()
+    if form.validate_on_submit():
+        newComment = Comment2(
+            author = current_user.id,
+            mood = moodID,
+            content = form.content.data
+        )
+        newComment.save()
+        return redirect(url_for('mood',moodID=moodID))
+    return render_template('comment2form.html',form=form,mood=mood)
+
+@app.route('/comment2/edit/<commentID>', methods=['GET', 'POST'])
+@login_required
+def comment2Edit(commentID):
+    edit2Comment = Comment2.objects.get(id=commentID)
+    if current_user != edit2Comment.author:
+        flash("You can't edit a comment you didn't write.")
+        return redirect(url_for('mood',moodID=edit2Comment.mood.id))
+    mood = Mood.objects.get(id=edit2Comment.mood.id)
+    form = Comment2Form()
+    if form.validate_on_submit():
+        edit2Comment.update(
+            content = form.content.data,
+            modify_date = dt.datetime.utcnow
+        )
+        return redirect(url_for('mood',moodID=edit2Comment.mood.id))
+
+    form.content.data = edit2Comment.content
+
+    return render_template('comment2form.html',form=form,mood=mood)   
+
+@app.route('/comment2/delete/<commentID>')
+@login_required
+def comment2Delete(commentID): 
+    deleteComment = Comment2.objects.get(id=commentID)
+    deleteComment.delete()
+    flash('The comments was deleted.')
+    return redirect(url_for('mood',moodID=deleteComment.mood.id))

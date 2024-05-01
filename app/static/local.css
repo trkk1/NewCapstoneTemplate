@@ -1,5 +1,5 @@
 html body {
-    background-color: #FF6961;;
+    background-color: #565655;;
   }
 
 .carousel-caption{
@@ -15,4 +15,27 @@ html body {
   left: 20px;
   color: #EDEDED;
 
+}
+
+#land{
+  position: relative;
+  bottom: 100px;
+  left: 400px;
+}
+
+#co{
+  position: relative;
+  left: 200px;
+}
+
+#sun{
+  position: relative;
+  left: 275px;
+  top: 175px;
+}
+
+#rain{
+  position: relative;
+  top: 175px;
+  right: 475px;
 }

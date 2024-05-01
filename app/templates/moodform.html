@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 
 {% block body %}
-<img src="/static/CloudsPNG.png" class="rounded float-end" width = "200" hieght= "200" alt="...">
 
-<img src="/static/CloudsPNG.png" class="rounded float-start" width = "200" hieght= "200" alt="...">    </div>
-<img src="/static/CloudsPNG.png" class="rounded float-end" width = "200" hieght= "200" alt="...">
+        <h1>Mood Tracking</h1>
 
-<img src="/static/CloudsPNG.png" class="rounded float-start" width = "200" hieght= "200" alt="...">    </div>
-        <h1>Add a post!</h1>
 
         <div class="text-center">
 
-        
+        <img id = "co" src="/static/r.webp" width = "200" height= "150">
+
+        <img id = "sun" src = "/static/sun.png" width = "200" height = "150">
+
+        <img id = "rain" src = "/static/rain.png" width = "200" height = "150">
+
         <form method=post>
             {{ form.hidden_tag() }}
 
@@ -38,26 +39,26 @@
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
+            <p>
+                {{ form.goal.label }} <br>
+                {{ form.goal() }}
+                <!--List the errors for this field-->
+                {% for error in form.goal.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
              <p>
-                <img src="/static/CloudsPNG.png" class="rounded float-end" width = "200" hieght= "200" alt="...">
-                <img src="/static/CloudsPNG.png" class="rounded float-start" width = "200" hieght= "200" alt="...">    </div>
-                <img src="/static/CloudsPNG.png" class="rounded float-end" width = "200" hieght= "200" alt="...">
-                <img src="/static/CloudsPNG.png" class="rounded float-end" width = "200" hieght= "200" alt="...">
 
-<img src="/static/CloudsPNG.png" class="rounded float-start" width = "200" hieght= "200" alt="...">    </div>
-<img src="/static/CloudsPNG.png" class="rounded float-end" width = "200" hieght= "200" alt="...">
-
-
-
-
-
-
-<img src="/static/CloudsPNG.png" class="rounded float-start" width = "200" hieght= "200" alt="...">    </div>
 
 
                 {{form.submit()}}
             </p>
         </form>
+
+        
     </div>
+
+
        
 {% endblock %}
+

@@ -58,4 +58,9 @@ class MoodForm(FlaskForm):
     emotion = SelectField('Emotion', choices=[(None,'---'),("Furious","Furious"),("Depressed","Depressed"),("Stressed","Stressed"),("Sad","Sad"),("OK","OK"),("Happy","Happy")], validators=[DataRequired()])
     activity = SelectField('Activity', choices=[(None,'---'),("Family","Family"),("Friend","Friend"),("Work","Work"),("Study","Study"),("Relationship","Relationship")], validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
+    goal = StringField('Goal Setting', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class Comment2Form(FlaskForm):
+    content = TextAreaField('Comment', validators=[DataRequired()])
+    submit = SubmitField('Comment')

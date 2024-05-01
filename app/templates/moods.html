@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<img src="/static/CloudsPNG.png" class="rounded float-end" width = "200" hieght= "200" alt="...">
 
-<img src="/static/CloudsPNG.png" class="rounded float-start" width = "200" hieght= "200" alt="...">    </div>
 <div class="row">
     <div class="col-4">
         <h1 class="display-1">Moods</h1>
@@ -16,6 +14,24 @@
 {% if moods %}
     {% for mood in moods %}
         <div class="row border-bottom">
+            <div class="col-2">
+                {% if loop.index == 1 %}
+                <h3 class="display-5">Delete</h3>
+                {% endif %}
+
+                {% if mood %}
+                    {{moment(mood.create_date).calendar()}} by {{mood.author.fname}} {{mood.author.lname}} 
+                    {% if mood.modifydate %}
+                     modified {{moment(mood.modifydate).calendar()}}
+                     {% endif %}
+                {% endif %}
+                <br>
+                {% if mood.author == current_user %}
+                    <a data-toggle="tooltip" data-placement="top" title="Delete Mood" href="/mood/delete/{{mood.id}}">
+                        <img width="40" class="bottom-image" src="/static/delete.png">
+                    </a>
+                {% endif %}
+            </div>
             <div class="col-2">
                 {% if loop.index == 1 %}
                 <h3 class="display-5">Date</h3>
@@ -49,9 +65,14 @@
                 {% endif %}
                 {{mood.activity}}
             </div>
+            <div class="col">
+                {% if loop.index == 1 %}
+                    <h3 class="display-5">Goal Setting</h3>
+                {% endif %}
+                {{mood.goal}}
+            </div>
         </div>
     {% endfor %}
-{% else %}
 
 {% endif %}
 
